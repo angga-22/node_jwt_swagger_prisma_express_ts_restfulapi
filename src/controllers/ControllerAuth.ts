@@ -9,6 +9,23 @@ class ControllerAuth {
     this._serviceAuth = serviceAuth;
   }
 
+  getUserById() {
+    const auth = this._serviceAuth;
+    return async (req: Request, res: Response, next: NextFunction) => {
+      try {
+        const response = await auth.getUserById(req.body.id);
+        return ResponseBuilder.response(
+          res,
+          200,
+          response,
+          "Success Get UserBy Id!"
+        );
+      } catch (error) {
+        next(error);
+      }
+    };
+  }
+
   login() {
     const auth = this._serviceAuth;
     return async (req: Request, res: Response, next: NextFunction) => {
