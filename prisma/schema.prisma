@@ -1,0 +1,82 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+enum Role {
+  ADMIN_USER
+  SUPER_USER
+  USER
+}
+enum Gender {
+  MALE
+  FEMALE
+  RANDOM
+}
+
+model Users {
+  id                         Int                      @id @default(autoincrement())
+  email                      String                   @unique @db.VarChar(255)
+  password                   String                   @db.VarChar(255)
+  passwordV3                 String?                  @map("password_v3") @db.VarChar(255)
+  username                   String?                  @unique @db.VarChar(255)
+  mobile                     String?                  @unique @db.VarChar(255)
+  firstName                  String?                  @db.VarChar(255)
+  lastName                   String?                  @db.VarChar(255)
+  gender                     Gender?                  @default(RANDOM)
+  birthDate                  DateTime?                @db.Date
+  address                    String?                  @db.VarChar(255)
+  image                      String?                  @db.VarChar(255)
+  role                       Role?                    
+  createdAt                  DateTime                 @db.Date
+  updatedAt                  DateTime                 @db.Date
+}
+
+
+enum Brand {
+  TOYOTA
+  HONDA
+  SUZUKI
+  MITSUBISHI
+
+}
+
+
+model Cars { 
+  carId                 Int               @id @default(autoincrement())
+  name                  String            @db.VarChar(100)
+  brand                 Brand              
+  image                 String            @db.VarChar(200)
+  rentPrice             Int               @db.Integer
+  yearReleased          DateTime          @db.Timestamp()
+  createdAt             DateTime          @db.Date
+  updatedAt             DateTime          @db.Date
+  updatedBy             String?           @db.VarChar(100)
+  isRent                Boolean           @default(false)
+  orderId               Int?
+  orders                Orders?            @relation(fields: [orderId], references: [orderId])
+}
+
+enum OrderStatus {
+  STILL_RENTING
+  FINISH_RENTING
+}
+
+
+model Orders {
+  orderId              Int               @id @default(autoincrement())
+  status               OrderStatus        
+  car                  Cars[]             
+  dayRent              Int               @db.Integer
+  priceRent            Int               @db.Integer
+}
+
+
+
+
+
+
+
