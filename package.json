@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "node restful api with auth jwt and swagger api",
   "main": "index.ts",
-  "repository": "https://github.com/angga-22/xxx",
+  "repository": "https://github.com/angga-22/node_jwt_swagger_prisma_express_ts_restfulapi",
   "author": "Dev <anggasp.unib@gmail.com>",
   "license": "MIT",
   "private": true,
